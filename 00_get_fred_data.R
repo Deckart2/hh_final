@@ -290,30 +290,6 @@ write_csv(full, "data/processed/rent_home_prices.csv")
 # write_csv(all_data, "data/processed/rent_home_prices.csv")
 
 
-#========================================================
-#Get IPUMS data to go from the 07-09 Mian Sufi data to CBSA:
-
-#Set Census API KEey:
-#Sys.setenv("CENSUS_KEY"= your_census_api_key)
-census_api_key <- Sys.getenv("CENSUS_KEY")
-
-
-cbsa <- get_acs(geography = "combined statistical area", 
-                       variables = "B19013_001",
-                       geometry = FALSE, 
-                       year = 2009, 
-                       survey = "acs5")
-
-
-county <- get_acs(geography = "county", 
-                  variables = "B19013_001",
-                  geometry = FALSE, 
-                  year = 2009, 
-                  survey = "acs5")
-
-ms <- read_dta("data/raw/miansufieconometrica_countylevel.dta")
-emp_pop <- read_dta("data/raw/emppop.dta")
-
 
 
          
