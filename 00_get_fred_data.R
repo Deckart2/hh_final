@@ -8,7 +8,7 @@ library(ipumsr)
 library(tidycensus)
 
 #Access FRED API: https://fred.stlouisfed.org/docs/api/api_key.html
-#Sys.setenv("FRED_API_KEY" = your_fred_api_key)
+Sys.setenv("FRED_API_KEY" = api_key)
 api_key <- Sys.getenv("FRED_API_KEY")
 
 
@@ -212,84 +212,3 @@ full <- full %>%
 
 write_csv(full, "data/processed/rent_home_prices.csv")
 
-
-
-
-# 
-# #GET CODES: 
-# #City:
-# cbsa_home_codes <- c("CUURA101SEHC01",  #New York 
-#                      "CUURA319SEHC01", #Atlanta
-#                      "CUURA422SEHC01", #San Francisco 
-#                      "CUURA103SEHC01", #Boston
-#                      "CUURA208SEHC01", #Detroit
-#                      "CUURA423SEHC01", #Seattle
-#                      "CUURA320SEHC01", #Miami 
-#                      "CUURA207SEHC01", #Chicago 
-#                      "CUURA316SEHC01" #Dallas-Ft Worth
-# )  
-# 
-# region_home_codes <- c("CUUR0300SEHC01", 
-#                        "CUUR0100SEHC01", 
-#                        "CUUR0200SEHC01", 
-#                        "CUUR0400SEHC01")
-# 
-# us_city_home_average_code <- "CUSR0000SEHC"
-# 
-# 
-# 
-# 
-# convert_home_to_rent_code <- function(rent_code){
-#   #Function to make use of the fact that for region and cbsa, 
-#   #the code is the same for home equivalent rent of primary residence
-#   # and rent of primary residence for each geography except for
-#   # home, the last digits are: SEHC01 and for rent they are SEHA
-#   home_code <- str_c(substring(rent_code, 1, nchar(rent_code) - 3), "A")
-# }
-# 
-# 
-# 
-# region_rent_codes <- lapply(region_home_codes, convert_home_to_rent_code)
-# us_city_rent_average_code <- "CUSR0000SEHA"
-# 
-# #GET DATA FROM CODES: 
-# cbsa_home <- lapply(cbsa_home_codes, get_fred_housing)
-# 
-# 
-# 
-# region_home <- lapply(region_home_codes, get_fred_housing)
-# us_city_home_average <- lapply(us_city_home_average_code, get_fred_housing)
-# region_rent <- lapply(region_rent_codes, get_fred_housing)
-# us_city_rent_average <- lapply(us_city_rent_average_code, get_fred_housing)
-# 
-# 
-# all_data <- bind_rows(cbsa_home, region_home, us_city_home_average, cbsa_rent, 
-#                       region_rent, us_city_rent_average) %>%
-#   mutate(type = ifelse(str_detect(series_id, "SEHC"), "owner_equiv_rent_pr", "rent_pr"), 
-#          geography  = case_when( 
-#            str_detect(series_id, "CUURA101") ~ "New York",
-#            str_detect(series_id, "CUURA319") ~ "Atlanta",
-#            str_detect(series_id, "CUURA422") ~ "San Francisco", 
-#            str_detect(series_id, "CUURA103") ~ "Boston", 
-#            str_detect(series_id, "CUURA208") ~ "Detroit", 
-#            str_detect(series_id, "CUURA423") ~ "Seattle", 
-#            str_detect(series_id, "CUURA320") ~ "Miami", 
-#            str_detect(series_id, "CUURA207") ~ "Chicago", 
-#            str_detect(series_id, "CUURA316") ~ "Dallas", 
-#            str_detect(series_id, "CUURA102") ~ "Philadelphia", 
-#            str_detect(series_id, "CUURA318") ~ "Houston",
-#            str_detect(series_id, "CUUR0300") ~ "South", 
-#            str_detect(series_id, "CUUR0100") ~ "Northeast", 
-#            str_detect(series_id, "CUUR0200") ~ "Midwest", 
-#            str_detect(series_id, "CUUR0400") ~ "West",
-#            str_detect(series_id, "CUSR0000") ~ "USA")
-#          ) %>%
-#   separate(date, sep ="-", into = c("year", "month", "day")) %>%
-#   select(year, month, geography, type, value)
-#   
-# write_csv(all_data, "data/processed/rent_home_prices.csv")
-
-
-
-
-         

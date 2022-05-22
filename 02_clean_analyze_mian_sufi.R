@@ -1,6 +1,9 @@
 #Get mian and sufi to the CBSA level:
 library(readxl)
 library(tidycensus)
+library(tidyverse)
+library(haven)
+
 
 #Read data:
 m <- read_dta("data/raw/miansufieconometrica_countylevel.dta")
@@ -17,11 +20,13 @@ ms <- m %>%
   mutate(fips = str_pad(fips, width = 5, side = "left", pad = "0")) %>%
   select(fips, netwp_h)
 
+write.csv(ms, "data/processed/ms.csv")
+
 
 #Get 2007-ish housing count by county via tidycensus:
 
 #SET CENSUS API KEY: https://walker-data.com/tidycensus/reference/census_api_key.html
-#census_api_key(your_census_api_key)
+#census_api_key()
 housing_county_07 <- get_acs(geography = "county", 
                          variables = "B25008_002",
                          year = 2009, 
@@ -80,4 +85,22 @@ ms_weighted <- ms %>%
 write.csv(ms_weighted, "data/processed/ms_weighted.csv")
 
 rent_home_ms <- left_join(rent_home_prices, ms_weighted)
- 
+
+#######
+
+#Base Regression Set-Up:
+base_reg <- rent_home_ms %>%
+  filter(geography != "20 City" & geography != "USA") %>%
+  filter(year == 2006) %>%
+  mutate(home_rent_div = cs_home/real_rent, 
+         home_rent_reindex_div = cs_home_reindexed / real_rent_reindexed)
+
+base_model <- lm(netwp_h_weighted_sum ~ home_rent_div, data = base_reg)
+reindex_model <- lm(netwp_h_weighted_sum ~ home_rent_reindex_div, data = base_reg)
+
+
+#Results using 2006 to predict Mian and Sufi 2007 - 2009 drop 
+summary(base_model)
+
+summary(reindex_model)
+stargazer::stargazer(reindex_model, type="text")
