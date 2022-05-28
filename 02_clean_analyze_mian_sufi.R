@@ -103,4 +103,4 @@ reindex_model <- lm(netwp_h_weighted_sum ~ home_rent_reindex_div, data = base_re
 summary(base_model)
 
 summary(reindex_model)
-stargazer::stargazer(reindex_model, type="text")
+stargazer::stargazer(reindex_model, type="html")

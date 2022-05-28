@@ -32,7 +32,7 @@ cbsa_rh <- rh %>%
     index == "cs_home_reindexed" ~ "Case-Shiller Housing Index ", 
     index == "real_rent" ~ "BLS Real Rent of Primary Residence", 
     index == "real_rent_reindexed" ~ "BLS Real Rent (Primary Residence)"))
-         
+
 cbsa_rh_index <- cbsa_rh %>%
   filter(index %in% c("cs_home_reindexed", "real_rent_reindexed"))
 
@@ -104,16 +104,5 @@ p <-ggplot(data = cbsa_rh_index) +
         legend.text = element_text(size=12.5),
         plot.title = element_text(size=20), 
         plot.caption =  element_text(size = 9, hjust = 0)
-        )
+  )
 p <- shift_legend2(p)
-
-
-
-
-#Thoughts on the charts:
-#1 slightly misleading comparing central city to sub-urban area
-#One would expect central cities would be more expensive than the surrounding metro areas
-#BUT this charts show data normalized to the same start year, so they tend to 
-#suggest regions are seeing their urban housing increase more quickly than rent
-# in the equivalent metropolitan area
-
