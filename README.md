@@ -4,6 +4,10 @@
 
 
 
+### Repo Organization:
+Raw data is in the ``data/raw`` folder, and processed data is in ``processed_data`` folder. 
+
+
 ### Data Sources:
 - Housing Prices - Case Shiller Index FRED Data accessed through fredr
 - Real Rent Prices - BLS CPI FRED Data accessed through fredr
