@@ -9,6 +9,8 @@ Raw data is in the ``data/raw`` folder, and processed data is in ``data/processe
 
 I also have uploaded a powerpoint slide and a word document describing this research project in the ``presentation`` folder. 
 
+### Replication:
+To replicate the code here, one must create API keys to use the *fredr* and *tidycensus* packages which access APIs for FRED and the ACS, respectively. For FRED, you can make an API key [here](https://fred.stlouisfed.org/docs/api/api_key.html), and for the tidycensus, you can make an API key [here] (https://api.census.gov/data/key_signup.html). 
 
 ### Data Sources:
 - Housing Prices - Case Shiller Index FRED Data accessed through fredr
